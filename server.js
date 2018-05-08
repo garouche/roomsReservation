@@ -14,8 +14,7 @@ app
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     if (req.method === 'OPTIONS'){
-        console.log("OPTIONS");
-        res.sendStatus(200)
+        res.sendStatus(200);
     } else {
 
 
@@ -29,7 +28,6 @@ app
     .use(bodyParser.urlencoded({ extended: true }))
     .get('/rooms', rooms.getRooms)
     .post('/reservations', rooms.reserveRoom)
-    .get('/reservations', (req, res) => res.send("Nothing to see here !"))
     .use(function (req, res) {
         console.log("ITS A 404", req.headers);
         res.writeHead(404, {"Content-Type" : "text/html"});
