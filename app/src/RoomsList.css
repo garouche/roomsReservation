@@ -1,0 +1,67 @@
+.roomsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    width: 90%;
+}
+
+h2 {
+    padding: 0;
+    margin: 0;
+    width: 70%;
+    text-align: left;
+}
+
+.textContainer {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.roomContainer {
+    text-align: left;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    width: 425px;
+    background: linear-gradient(to right, rgba(213, 213, 213, .45), rgba(255, 255, 255, 1) 95% );
+
+    /*background-color: #f5f5f5;*/
+    border: 1px solid #80808033;
+    border-radius: 3px;
+    height: 150px;
+}
+
+.roomContainer:hover .roomImg{
+    background: url('./stationF.jpg') no-repeat;
+    background-size: cover;
+
+}
+
+.roomContainer:hover {
+    background-color: #ffedfd;
+}
+
+.roomImg{
+    width: 40%;
+    border-radius: 1.5px;
+    background: linear-gradient(to top, rgba(255, 228, 246, .30), rgba(255, 255, 255, .70) 95% ),url('./stationF.jpg') no-repeat;
+    background-size: cover;
+}
+
+button {
+    align-self: center;
+    cursor: pointer;
+    width: 100px;
+    background-color: black;
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+button:hover{
+    background-color:  #e02c9e;
+}

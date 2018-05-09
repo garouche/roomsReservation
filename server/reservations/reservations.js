@@ -4,6 +4,7 @@ const getRooms = (req, res) => {
     if (fs.existsSync('./roomList/rooms.json')){
         const roomsList = JSON.parse(fs.readFileSync('./roomList/rooms.json', 'utf8'));
 
+        console.log(req.query);
         res.status(200).send(filterRooms(roomsList.rooms, req.query));
     } else {
         res.status(500).send('Une erreure est survenue.');
@@ -35,10 +36,10 @@ const filterRooms = (roomsList, query) => {
     } else {
         let reservationsList = fs.readFileSync('./roomList/reservations.json', 'utf8');
 
-        return roomsList.filter(room => !JSON.parse(reservationsList).some(reservation => {
-            return (checkName(reservation.name, room.name) && !checkSchedule(query, reservation)) ||
+        return roomsList.filter(room => !JSON.parse(reservationsList).some(reservation =>
+            (checkName(reservation.name, room.name) && !checkSchedule(query, reservation)) ||
                 !checkCapacityAndEquipements(query, room)
-        }));
+        ));
     }
 };
 
@@ -56,25 +57,22 @@ const checkCapacityAndEquipements = (query, room) => {
     return checkCapacity(query.capacity, room.capacity) && checkEquipements(query.equipements, room.equipements)
 };
 
-const checkCapacity = (queryCapacity, roomCapacity) => {
-    return queryCapacity !== undefined ? roomCapacity >= queryCapacity : true;
-};
+const checkCapacity = (queryCapacity, roomCapacity) =>
+     queryCapacity !== undefined ? roomCapacity >= queryCapacity : true;
 
-const checkEquipements = (queryEquipements, roomEquipements) => {
-    return queryEquipements ? queryEquipements.filter(equipement => {
-        return roomEquipements.findIndex((roomEquipement) => {
-            return equipement === roomEquipement.name
-        }) !== -1
-    }).length === queryEquipements.length : true;
-};
+const checkEquipements = (queryEquipements, roomEquipements) =>
+    queryEquipements ? queryEquipements.filter(equipement =>
+            roomEquipements.findIndex((roomEquipement) =>
+                equipement === roomEquipement.name
+        ) !== -1
+    ).length === queryEquipements.length : true;
 
-const renameKeys = (keysMap, obj) => {
-    return Object.keys(obj).reduce((newObj, key) => {
+const renameKeys = (keysMap, obj) =>
+    Object.keys(obj).reduce((newObj, key) => {
         const renamedKey = {[keysMap[key] || key] : obj[key]};
 
         return Object.assign(newObj, renamedKey);
     }, {});
-};
 
 export {getRooms, reserveRoom};
 

@@ -1,0 +1,45 @@
+.filterContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: white;
+    width: 90%;
+}
+
+.optionsContainer {
+    margin: 20px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.dateContainer {
+    display: flex;
+}
+
+input, select {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+input:valid {
+    color: green;
+}
+
+
+input:invalid {
+    color: red;
+}
+
+/*input:valid+span:after {*/
+    /*content: '✓';*/
+    /*color: green;*/
+/*}*/
+/**/
+/*input:invalid+span:after {*/
+    /*content: '✖';*/
+    /*color:red;*/
+/*}*/
+

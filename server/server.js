@@ -17,7 +17,6 @@ app
         res.sendStatus(200);
     } else {
 
-
         if (req.query.equipements && !Array.isArray(req.query.equipements)) {
             req.query.equipements = [req.query.equipements];
         }
