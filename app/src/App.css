@@ -14,7 +14,7 @@
   right: 0;
   color: white;
   text-shadow: 1px 1px black;
-  background: linear-gradient(to top, rgba(195, 85, 191, .25) , rgba(255, 255, 255, .70) 95% ),url('./stationF.jpg') no-repeat 50% 45%;
+  background: url('./stationF.jpg') no-repeat 50% 45%;
   text-align: center;
   font-size: 40px;
   /*background-clip: content-box;*/

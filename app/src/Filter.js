@@ -128,7 +128,7 @@ export default class Filter extends Component {
                 </div>
                 <div className={"optionsContainer"}>
                     <label htmlFor={"rangeCapacity"}> Capacité d'accueil</label>
-                    {this.state.capacity}
+                    {`${this.state.capacity} Personne${this.state.capacity > 1 ? 's' : ''}`}
                     <div className={"rangeContainer"}>
                         1 <input defaultValue={1} id="rangeCapacity" type={"range"} name={"capacity"} min={"1"} max={"26"} onChange={this.handleChange}/> 26
                     </div>
@@ -137,7 +137,7 @@ export default class Filter extends Component {
                     <label> Date de réservation</label>
                     <div className={"dateContainer"}>
                         <span>Le</span>
-                        <input type={"date"} name="startDate" min={moment().format('YYYY-MM-DD')} required onChange={this.handleChange}/>
+                        <input type={"date"} className="startDate" name="startDate" min={moment().format('YYYY-MM-DD')} required onChange={this.handleChange}/>
                         <span>de</span>
                         {this.renderTime("startTime")}
                         <span>à</span>

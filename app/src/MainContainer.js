@@ -41,7 +41,7 @@ export default class MainContainer extends Component {
         console.log(this.state.rooms);
         return (
             <div className={"mainContainer"}>
-                <h1>Filtres</h1>
+                <h1><b>Filtres</b></h1>
                 <Filter getRoomsList={this.getRoomsList}/>
                 <h1>Salles Disponibles</h1>
                 <RoomsList rooms={this.state.rooms} />
