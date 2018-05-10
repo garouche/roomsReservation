@@ -8,6 +8,8 @@ const getRemainder = () => {
         return minutes <= 30 ? 30 - minutes : 60 - minutes;
 };
 
+
+let time;
 export default class Filter extends Component {
     constructor(props){
         super(props);
@@ -15,9 +17,9 @@ export default class Filter extends Component {
             capacity: 1,
             equipements: ['TV', 'Retro Projecteur'],
             selectedEquipements: [],
-            date: moment().format('YYYY-MM-DD'),
+            date: (moment().format('HH:mm') >= "23:30" ? moment().add(1 , "days").format('YYYY-MM-DD') : moment().format('YYYY-MM-DD')),
             startTime: moment().add(getRemainder(), "minutes").format('HH:mm').split(':').join('h'),
-            endTime: moment().add(getRemainder() + 30, "minutes").format('HH:mm').split(':').join('h'),
+            endTime: ((time = moment().add(getRemainder() + 30, "minutes").format('HH:mm').split(':').join('h')) !== "00h00" ? time : "24h00"),
         };
         this.handleChange = this.handleChange.bind(this);
         this.addEquipement = this.addEquipement.bind(this);
@@ -63,7 +65,7 @@ export default class Filter extends Component {
     }
 
     handleChange(e) {
-        const {type, name, checked, value, min} = e.target;
+        const {type, name, checked, value} = e.target;
 
         if (type === 'checkbox' && ['TV', 'Retro Projecteur'].indexOf(name) !== -1){
             checked ? this.addEquipement(name) : this.removeEquipement(name);
@@ -76,16 +78,12 @@ export default class Filter extends Component {
         } else if (type === 'select-one'){
             const endTime = (name === 'startTime' &&  value >= this.state.endTime && this.state.endTime !== "00h00" ? {endTime: Filter.getEndTime(value)} : {});
 
-            console.log(this.state.endTime);
-            console.log(name);
-            console.log(value);
-            console.log(endTime);
             this.setState(Object.assign({[name]: value}, endTime), () => this.props.getRoomsList(this.state));
         }
     }
 
     static getEndTime (startTime){
-        const {hours, minutes} = startTime.split('h').reduce((time, unit) =>{
+        const {hours, minutes} = startTime.split('h').reduce((time, unit) => {
             return (!time.hours ? Object.assign(time, {hours: unit}) : Object.assign(time, {minutes: unit}));
         }, {});
 
@@ -93,7 +91,7 @@ export default class Filter extends Component {
     }
 
     static getAllAvalaibleTimes(startHour, startMinute, array){
-        if (startHour <= 24){
+        if (startHour <= 24) {
             array.push(<option key={startHour+startMinute}>{(startHour === 24 ? "24" : startHour < 10 ? '0' + startHour : startHour) + 'h' + (startMinute ? startMinute : "00")}</option>);
             if (!startMinute && startHour !== 24) {
                 return Filter.getAllAvalaibleTimes(startHour, startMinute + 30, array);
@@ -103,7 +101,6 @@ export default class Filter extends Component {
         }
         return array;
     }
-
 
     getStartTime(name) {
         const todayDate = moment().format('YYYY-MM-DD');
@@ -137,6 +134,9 @@ export default class Filter extends Component {
     }
 
     render () {
+        const maxSchedule = moment().format('HH:mm') >= "23:30";
+        const dateNow = (!maxSchedule ? moment().format('YYYY-MM-DD') : moment().add(1, "days").format('YYYY-MM-DD'));
+
         return (
             <div className={"filterContainer"}>
                 <div className={"optionsContainer"}>
@@ -154,7 +154,7 @@ export default class Filter extends Component {
                     <label> Date de réservation</label>
                     <div className={"dateContainer"}>
                         <span>Le</span>
-                        <input type={"date"} className="startDate" name="startDate" min={moment().format('YYYY-MM-DD')} defaultValue={moment().format('YYYY-MM-DD')} required onChange={this.handleChange}/>
+                        <input type={"date"} className="startDate" name="startDate" min={dateNow} defaultValue={dateNow} required onChange={this.handleChange}/>
                         <span>de</span>
                         {this.renderTime("startTime")}
                         <span>à</span>

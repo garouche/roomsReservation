@@ -49,7 +49,7 @@ h2 {
 }
 
 .roomContainer:hover {
-    outline: 1px solid deeppink;
+    border: 1px solid rgba(255, 21, 144, 0.5);
     background: linear-gradient(to right, white 25%, rgba(196, 1, 252, 0.33), rgba(14, 107, 255, 0.32));
 }
 

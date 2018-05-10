@@ -2,6 +2,34 @@
   text-align: center;
 }
 
+.validReservation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, .5);
+}
+
+button {
+  outline: none;
+}
+
+.validBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 30%;
+  font-size: 4vmax;
+  border: 1px solid deeppink;
+  color: white;
+  /*background-color: white;*/
+  background: linear-gradient(to right, #c901ff, #0e6bff);
+}
+
 .imgContainer {
   display: flex;
   justify-content: center;

@@ -24,7 +24,6 @@ export default class RoomsList extends Component {
                 roomsContainer.style.justifyContent = "space-between";
             }
         }
-
     }
 
     componentDidUpdate(){
@@ -76,7 +75,6 @@ export default class RoomsList extends Component {
     }
 
     render () {
-        console.log(this.props.rooms[0]);
         return (
             <div className={"roomsContainer"}>
                 {this.renderRooms()}

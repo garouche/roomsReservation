@@ -22,12 +22,22 @@ export default class MainContainer extends Component {
             const {date, startTime, endTime} = this.state.reservation;
 
             req.onloadend = (e) => {
-                this.getRoomsList(this.state.reservation);
+                if (e.target.status === 201) {
+                    MainContainer.validReservation();
+                    this.getRoomsList(this.state.reservation);
+                }
             };
             req.open("POST", `http://localhost:3001/reservations/rooms`);
             req.setRequestHeader("Content-Type", "application/json");
             req.send(JSON.stringify(Object.assign(this.state.rooms[value], {queryStartTime: `${date}T${startTime}`, queryEndTime: `${date}T${endTime}`})));
         }
+    }
+
+    static validReservation() {
+        const validReservation = document.querySelector('.validReservation');
+
+        validReservation.style.visibility = "visible";
+        setTimeout(() => validReservation.style.visibility = "hidden", 1500);
     }
 
     static renderEquipementsQuery(equipements){
@@ -49,7 +59,6 @@ export default class MainContainer extends Component {
             req.abort();
         }
 
-        console.log(date, startTime, endTime);
         req.open("GET", `http://localhost:3001/reservations/rooms?capacity=${capacity}${MainContainer.renderEquipementsQuery(selectedEquipements)+MainContainer.renderScheduleQuery(date, startTime, endTime)}`);
         req.onloadend = (e) => {
             if (typeof e.target.response === 'string' && e.target.status === 200) {
@@ -61,7 +70,7 @@ export default class MainContainer extends Component {
     }
 
     render (){
-        console.log(this.state.rooms);
+
         return (
             <div className={"mainContainer"}>
                 <h1><b>Filtres</b></h1>

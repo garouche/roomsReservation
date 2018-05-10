@@ -15,42 +15,6 @@ const getRooms = (req, res) => {
     }
 };
 
-const checkBody = (body) => {
-
-    if (body){
-        return checkTimeQuery(body);
-    } else {
-        return true;
-    }
-};
-
-const checkQuery = (query) => {
-    if (query){
-        return checkCapacityQuery(query) && checkEquipementsQuery(query) && checkTimeQuery(query);
-    } else {
-        return false;
-    }
-    return true;
-};
-
-const checkCapacityQuery = ({capacity}) => {
-    return (!isNaN(parseInt(capacity)) && capacity >= 1 && capacity <= 26);
-};
-
-const checkEquipementsQuery = ({equipements}) => (equipements && typeof equipements === 'object' && equipements.length ? (!equipements.some(equipement => ['TV', 'Retro Projecteur'].indexOf(equipement) === -1)) : true);
-
-const checkTimeQuery = ({queryStartTime, queryEndTime}) => {
-    if (queryStartTime && queryEndTime) {
-        const startTime = moment(queryStartTime.split('h').join(':'));
-        const endTime = moment(queryEndTime.split('h').join(':'));
-        const minutes = [0, 30];
-
-        return startTime.isSameOrAfter(moment()) && startTime.isBefore(queryEndTime.split('h').join(':')) && startTime.isValid() && endTime.isValid() && (minutes.indexOf(startTime.minute()) !== -1) && (minutes.indexOf(startTime.minute()) !== -1);
-    } else {
-        return false;
-    }
-};
-
 const reserveRoom = (req, res) => {
     if (checkBody(req.body)) {
         const writeBodyKeys = renameKeys({
@@ -124,6 +88,49 @@ const renameKeys = (keysMap, obj) =>
 
         return Object.assign(newObj, renamedKey);
     }, {});
+const checkBody = (body) => {
+    if (body){
+        return checkTimeQuery(body) && checkNameQuery(body);
+    } else {
+        return false;
+    }
+};
+
+const checkQuery = (query) => {
+    if (query){
+        return checkCapacityQuery(query) && checkEquipementsQuery(query) && checkTimeQuery(query);
+    } else {
+        return false;
+    }
+};
+
+const checkNameQuery = (body) => {
+    if (body && fs.existsSync('./roomList/rooms.json')){
+        const roomsList = JSON.parse(fs.readFileSync('./roomList/rooms.json', 'utf8'));
+
+        return roomsList.rooms.filter(room => room.name === body.name).length;
+    } else {
+        return false;
+    }
+};
+
+const checkCapacityQuery = ({capacity}) => {
+    return (!isNaN(parseInt(capacity)) && capacity >= 1 && capacity <= 26);
+};
+
+const checkEquipementsQuery = ({equipements}) => (equipements && typeof equipements === 'object' && equipements.length ? (!equipements.some(equipement => ['TV', 'Retro Projecteur'].indexOf(equipement) === -1)) : true);
+
+const checkTimeQuery = ({queryStartTime, queryEndTime}) => {
+    if (queryStartTime && queryEndTime) {
+        const startTime = moment(queryStartTime.split('h').join(':'));
+        const endTime = moment(queryEndTime.split('h').join(':'));
+        const minutes = [0, 30];
+
+        return startTime.isSameOrAfter(moment()) && startTime.isBefore(queryEndTime.split('h').join(':')) && startTime.isValid() && endTime.isValid() && (minutes.indexOf(startTime.minute()) !== -1) && (minutes.indexOf(startTime.minute()) !== -1);
+    } else {
+        return false;
+    }
+};
 
 export {getRooms, reserveRoom};
 
