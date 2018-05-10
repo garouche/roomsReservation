@@ -17,7 +17,7 @@ export default class Filter extends Component {
             selectedEquipements: [],
             date: moment().format('YYYY-MM-DD'),
             startTime: moment().add(getRemainder(), "minutes").format('HH:mm').split(':').join('h'),
-            endTime: moment().add(getRemainder(), "minutes").format('HH:mm').split(':').join('h'),
+            endTime: moment().add(getRemainder() + 30, "minutes").format('HH:mm').split(':').join('h'),
         };
         this.handleChange = this.handleChange.bind(this);
         this.addEquipement = this.addEquipement.bind(this);
@@ -26,13 +26,16 @@ export default class Filter extends Component {
     }
 
 
+    componentDidMount (){
+        this.props.getRoomsList(this.state);
+    }
+
     addEquipement(equipement) {
         let index = this.state.selectedEquipements.indexOf(equipement);
 
         if (index === -1){
             let newSelectedEquipements = [...this.state.selectedEquipements, equipement];
 
-            console.log(this.props);
             this.setState({selectedEquipements: newSelectedEquipements}, () => this.props.getRoomsList(this.state));
         }
     }
@@ -69,15 +72,29 @@ export default class Filter extends Component {
         } else if (type === 'date' && value >= moment().format('YYYY-MM-DD')){
             const resetTime = this.state.date !== value ? {startTime: "00h00", endTime: "00h30"} : {};
 
-            this.setState(Object.assign({date: value}, resetTime));
+            this.setState(Object.assign({date: value}, resetTime), () => this.props.getRoomsList(this.state));
         } else if (type === 'select-one'){
-            this.setState({[name]: value});
+            const endTime = (name === 'startTime' &&  value >= this.state.endTime && this.state.endTime !== "00h00" ? {endTime: Filter.getEndTime(value)} : {});
+
+            console.log(this.state.endTime);
+            console.log(name);
+            console.log(value);
+            console.log(endTime);
+            this.setState(Object.assign({[name]: value}, endTime), () => this.props.getRoomsList(this.state));
         }
+    }
+
+    static getEndTime (startTime){
+        const {hours, minutes} = startTime.split('h').reduce((time, unit) =>{
+            return (!time.hours ? Object.assign(time, {hours: unit}) : Object.assign(time, {minutes: unit}));
+        }, {});
+
+        return startTime === "23h30" ? "24h00" : moment().minute(minutes).hours(hours).add(30, "minutes").format("HH:mm").split(':').join('h');
     }
 
     static getAllAvalaibleTimes(startHour, startMinute, array){
         if (startHour <= 24){
-            array.push(<option key={startHour+startMinute}>{(startHour === 24 ? "00" : startHour) + 'h' + (startMinute ? startMinute : "00")}</option>);
+            array.push(<option key={startHour+startMinute}>{(startHour === 24 ? "24" : startHour < 10 ? '0' + startHour : startHour) + 'h' + (startMinute ? startMinute : "00")}</option>);
             if (!startMinute && startHour !== 24) {
                 return Filter.getAllAvalaibleTimes(startHour, startMinute + 30, array);
             } else if (startHour !== 24){
@@ -94,7 +111,7 @@ export default class Filter extends Component {
         const date = today ? moment() : moment(this.state.date);
 
         if (name === "endTime"){
-            const startTime = this.state.startTime ? this.state.startTime.split('h') : date.add(getRemainder(), "minutes").format('HH:mm').split(':');
+            const startTime = this.state.startTime ? this.state.startTime.split('h') : date.add(getRemainder() + 30, "minutes").format('HH:mm').split(':');
 
             return date.hour(startTime[0]).minute(startTime[1]).add(30, "minutes").format('HH:mm').split(':');
         } else {
@@ -106,7 +123,7 @@ export default class Filter extends Component {
 
     renderTime(name) {
         const timeNow = this.getStartTime(name);
-        const options = (name === "endTime" && timeNow.join(':') === "00:00" ? <option>00h00</option> : Filter.getAllAvalaibleTimes(parseInt(timeNow[0], 10), parseInt(timeNow[1], 10), []));
+        const options = (name === "endTime" && timeNow.join(':') === "00:00" ? <option>24h00</option> : Filter.getAllAvalaibleTimes(parseInt(timeNow[0], 10), parseInt(timeNow[1], 10), []));
 
         if (name === "startTime"){
             options.pop();
@@ -137,7 +154,7 @@ export default class Filter extends Component {
                     <label> Date de réservation</label>
                     <div className={"dateContainer"}>
                         <span>Le</span>
-                        <input type={"date"} className="startDate" name="startDate" min={moment().format('YYYY-MM-DD')} required onChange={this.handleChange}/>
+                        <input type={"date"} className="startDate" name="startDate" min={moment().format('YYYY-MM-DD')} defaultValue={moment().format('YYYY-MM-DD')} required onChange={this.handleChange}/>
                         <span>de</span>
                         {this.renderTime("startTime")}
                         <span>à</span>

@@ -6,10 +6,42 @@ body {
   font-family: 'Barlow Condensed', sans-serif;
 }
 
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: linear-gradient(to right, #c901ff, #0e6bff);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+  margin-top: -14px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #fdffff;
+  height: 18px;
+  width: 8px;
+  border-radius: 10%;
+  background-color: rgb(250, 255, 255);
+  cursor: pointer;
+  margin-top: -5px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
 h1 {
   width: 100%;
   font-size: 40px;
-  background: -webkit-linear-gradient(left, #ab02df 40%, #1024f8 60%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /*background: -webkit-linear-gradient(left, #7c02a6 45%, #1024f8 55%);*/
+  /*-webkit-background-clip: text;*/
+  /*-webkit-text-fill-color: transparent;*/
 }

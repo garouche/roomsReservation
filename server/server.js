@@ -25,13 +25,13 @@ app
     })
     .use(express.json())
     .use(bodyParser.urlencoded({ extended: true }))
-    .get('/rooms', rooms.getRooms)
-    .post('/reservations', rooms.reserveRoom)
+    .get('/reservations/rooms', rooms.getRooms)
+    .post('/reservations/rooms', rooms.reserveRoom)
     .use(function (req, res) {
-        console.log("ITS A 404", req.headers);
-        res.writeHead(404, {"Content-Type" : "text/html"});
-        res.write("<p>404 Not Found</p>");
-        res.end();
+    //     console.log("ITS A 404", req.headers);
+    //     res.writeHead(404, {"Content-Type" : "text/html"});
+    //     res.write("<p>404 Not Found</p>");
+        res.sendStatus(500);
     })
     .listen(3001, function() {
         console.log("Server started listening on 3001")

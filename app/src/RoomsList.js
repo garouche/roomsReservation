@@ -54,21 +54,25 @@ export default class RoomsList extends Component {
     }
 
     renderRooms() {
-        return this.props.rooms.map((room, index) => {
-            return (
-            <div key={room+index} className="roomContainer">
-                <div className={"textContainer"}>
-                    <h2>{room.name}</h2>
-                    <span>Capacity:{room.capacity}</span>
-                    <span>Equipements: {this.renderEquipements(room.equipements)}</span>
-                    <button value={room.name}>
-                        Reserver !
-                    </button>
-                </div>
-                <div className={"roomImg"} />
-            </div>
-            )
-        })
+        if (this.props.rooms.length) {
+            return this.props.rooms.map((room, index) => {
+                return (
+                    <div key={room + index} className="roomContainer">
+                        <div className={"textContainer"}>
+                            <h2>{room.name}</h2>
+                            <span>Capacity:{room.capacity}</span>
+                            <span>Equipements: {this.renderEquipements(room.equipements)}</span>
+                            <button value={index} onClick={this.props.reserveRoom}>
+                                Reserver !
+                            </button>
+                        </div>
+                        <div className={"roomImg"}/>
+                    </div>
+                )
+            })
+        } else {
+            return <span id={"noRoom"}>Désolé, Aucune salle n'est disponible avec ces critères ! :-(</span>
+        }
     }
 
     render () {
