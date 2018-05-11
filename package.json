@@ -1,0 +1,24 @@
+{
+  "name": "reservations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "server": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo 'Error: no test specified'",
+    "start" : "cd server && npm install & cd app && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garouche/roomsReservation.git"
+  },
+  "author": "garouche",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/garouche/roomsReservation/issues"
+  },
+  "homepage": "https://github.com/garouche/roomsReservation#readme"
+}
