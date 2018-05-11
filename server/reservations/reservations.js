@@ -126,7 +126,7 @@ const checkTimeQuery = ({queryStartTime, queryEndTime}) => {
         const endTime = moment(queryEndTime.split('h').join(':'));
         const minutes = [0, 30];
 
-        return startTime.isSameOrAfter(moment()) && startTime.isBefore(queryEndTime.split('h').join(':')) && startTime.isValid() && endTime.isValid() && (minutes.indexOf(startTime.minute()) !== -1) && (minutes.indexOf(startTime.minute()) !== -1);
+        return (startTime.isSameOrAfter(moment()) && startTime.isBefore(queryEndTime.split('h').join(':')) && startTime.isValid() && endTime.isValid() && (minutes.indexOf(startTime.minute()) !== -1) && (minutes.indexOf(endTime.minute()) !== -1));
     } else {
         return false;
     }

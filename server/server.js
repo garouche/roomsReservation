@@ -31,7 +31,6 @@ app
         console.log("ITS A 404", req.headers);
         res.writeHead(404, {"Content-Type" : "text/html"});
         res.write("<p>404 Not Found</p>");
-        res.sendStatus(500);
     })
     .listen(3001, function() {
         console.log("Server started listening on 3001")

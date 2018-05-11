@@ -43,7 +43,7 @@ h2 {
 }
 
 .roomContainer:hover .roomImg{
-    background: url('./stationF.jpg') no-repeat;
+    background: url('../PIctures/stationF.jpg') no-repeat;
     background-size: cover;
 
 }
@@ -56,7 +56,7 @@ h2 {
 .roomImg{
     width: 40%;
     border-radius: 1.5px;
-    background: linear-gradient(to top, rgba(255, 228, 246, .30), rgba(255, 255, 255, .70) 95% ),url('./stationF.jpg') no-repeat;
+    background: linear-gradient(to top, rgba(255, 228, 246, .30), rgba(255, 255, 255, .70) 95% ),url('../PIctures/stationF.jpg') no-repeat;
     background-size: cover;
 }
 

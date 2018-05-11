@@ -26,7 +26,7 @@ button {
   font-size: 4vmax;
   border: 1px solid deeppink;
   color: white;
-  /*background-color: white;*/
+  padding: 10px;
   background: linear-gradient(to right, #c901ff, #0e6bff);
 }
 
@@ -42,9 +42,8 @@ button {
   right: 0;
   color: white;
   text-shadow: 1px 1px black;
-  background: url('./stationF.jpg') no-repeat 50% 45%;
+  background: url('Components/PIctures/stationF.jpg') no-repeat 50% 45%;
   text-align: center;
   font-size: 40px;
-  /*background-clip: content-box;*/
 }
 

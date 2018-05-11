@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import RoomsList from './RoomsList';
-import Filter from './Filter';
+import RoomsList from './Rooms/RoomsList';
+import Filter from './Filter/Filter';
 import './MainContainer.css';
 const req = new XMLHttpRequest();
 
